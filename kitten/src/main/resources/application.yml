@@ -1,0 +1,13 @@
+server:
+  port: 8010
+
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 60000
+
+food-service:
+  ribbon:
+    listOfServers: localhost:8020
+
+# enable if you want to see the exception thrown by a failing request.
+#logging.level.com.netflix.hystrix.AbstractCommand=DEBUG

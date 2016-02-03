@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hystrix-dashboard-pod
+  labels:
+    app: hystrix-dashboard
+spec:
+  containers:
+  - name: hystrix-dashboard
+    image: docker.epages.com/ng/hystrix-dashboard:latest
+    ports:
+      - containerPort: 80
+    env:
+      - name: JAVA_TOOL_OPTIONS
+        value: '-Xmx512m'
+      - name: SPRING_CLOUD_CONFIG_URI
+        value: 'http://config-server'
+      - name: SPRING_CLOUD_CONFIG_LABEL
+        value: 'kubernetes'
+      - name: SPRING_CLOUD_CONFIG_FAIL_FAST
+        value: 'true'

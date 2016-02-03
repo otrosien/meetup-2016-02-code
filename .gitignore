@@ -1,0 +1,10 @@
+build/
+bin/
+.*
+gradle.properties
+*.iml
+*.ipr
+*.iws
+_ajdump
+lib/*.jar
+config-repo/

@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: config-server-rc
+spec:
+  replicas: 1
+  selector:
+    app: config-server
+  template:
+    metadata:
+      labels:
+        app: config-server
+    spec:
+      containers:
+      - name: config-server
+        image: docker.epages.com/ng/config-server:latest
+        ports:
+        - containerPort: 80
+          name: http
+        env:
+          - name: JAVA_TOOL_OPTIONS
+            value: '-Xmx256m'
+          - name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
+            value: 'https://github.com/otrosien/meetup-2016-config-repo.git'
+          - name: SERVER_PORT
+            value: '80'

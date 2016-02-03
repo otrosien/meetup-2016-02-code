@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: food-rc
+spec:
+  replicas: 1
+  selector:
+    app: food
+  template:
+    metadata:
+      labels:
+        app: food
+    spec:
+      containers:
+      - name: food
+        image: your-docker-registry/your-images/food:latest
+        ports:
+        - containerPort: 80
+          name: http
+        env:
+          - name: JAVA_TOOL_OPTIONS
+            value: '-Xmx256m'
+          - name: SERVER_PORT
+            value: '80'
+          - name: SPRING_CLOUD_CONFIG_URI
+            value: 'http://config-server'
+          - name: SPRING_CLOUD_CONFIG_LABEL
+            value: 'kubernetes'
+          - name: SPRING_CLOUD_CONFIG_FAIL_FAST
+            value: 'true'
+        readinessProbe:
+          httpGet:
+            path: /info
+            port: 80
+          initialDelaySeconds: 15
+          timeoutSeconds: 3
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 10
+          timeoutSeconds: 3
