@@ -44,6 +44,10 @@ dependencies {
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
+bootRepackage {
+	outputFile = project.file('build/libs/app.jar')
+}
+
 wrapper {
 	gradleVersion = '2.10'
 }
